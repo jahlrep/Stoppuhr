@@ -31,8 +31,9 @@ jobs:
       - name: Package to IPA
         run: |
           mkdir -p Payload
-          cp -a build/Build/Products/Release-iphoneos/*.app Payload/
+          find build/Build/Products -name "*.app" -type d -exec cp -a {} Payload/ \;
           zip -r -y App.ipa Payload
+          
     
 
       - name: Upload IPA Artifact
