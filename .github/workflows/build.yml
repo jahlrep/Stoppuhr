@@ -27,15 +27,14 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
             ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES=YES
-
+  
       - name: Package to IPA
         run: |
           mkdir -p Payload
-          find build/Build/Products -name "*.app" -type d -exec cp -a {} Payload/ \;
+          # Sucht den .app-Ordner dynamisch und kopiert ihn direkt in Payload/
+          find build -name "*.app" -type d -exec cp -a {} Payload/ \;
           zip -r -y App.ipa Payload
           
-    
-
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
