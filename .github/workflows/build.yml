@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-14 # Empfohlen für aktuelle Xcode-Versionen
 
     steps:
       - name: Checkout Code
@@ -19,23 +19,25 @@ jobs:
       - name: Build App Bundle
         run: |
           xcodebuild -scheme Stoppwatch \
-            -destination 'generic/platform=iOS' \
+            -sdk iphoneos \
             -configuration Release \
             -derivedDataPath build \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES=YES
 
       - name: Package to IPA
         run: |
           mkdir -p Payload
-          find build/Build/Products -name "*.app" -exec cp -R {} Payload/ \;
-          zip -r App.ipa Payload
-          
+          # Mit -a bleiben Symlinks und Berechtigungen der .app exakt erhalten
+          cp -a build/Build/Products/Release-iphoneos/Stoppwatch.app Payload/
+          zip -r -y App.ipa Payload
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ipad-app-ipa
           path: App.ipa
+          
           
