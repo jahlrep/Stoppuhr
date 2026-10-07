@@ -31,9 +31,9 @@ jobs:
       - name: Package to IPA
         run: |
           mkdir -p Payload
-          # Mit -a bleiben Symlinks und Berechtigungen der .app exakt erhalten
-          cp -a build/Build/Products/Release-iphoneos/Stoppwatch.app Payload/
+          cp -a build/Build/Products/Release-iphoneos/*.app Payload/
           zip -r -y App.ipa Payload
+    
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
