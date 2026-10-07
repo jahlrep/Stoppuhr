@@ -18,7 +18,7 @@ jobs:
 
       - name: Build App Bundle
         run: |
-          xcodebuild -scheme Stoppuhr \
+          xcodebuild -scheme Stoppwatch \
             -destination 'generic/platform=iOS' \
             -configuration Release \
             -derivedDataPath build \
