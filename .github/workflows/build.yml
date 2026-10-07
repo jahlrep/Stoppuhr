@@ -20,7 +20,7 @@ jobs:
         run: |
           xcodebuild -scheme Stoppwatch \
             -sdk iphoneos \
-            -destination 'generic/platform=iOS'
+            -destination 'generic/platform=iOS' \
             -configuration Release \
             -derivedDataPath build \
             CODE_SIGN_IDENTITY="" \
